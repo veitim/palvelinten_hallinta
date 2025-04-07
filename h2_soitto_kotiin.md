@@ -211,7 +211,69 @@ Käyttämäni Vagrantfile:
 
 ## e) Kokeile vähintään kahta tilaa verkossa
 
+Kokeilin alkuun asentaa apache2. Ei toiminut, vaan komentotulkkiin tuli seuraava virhekoodi.
 
+vagrant@master:~$ sudo salt '*' pkg.installed apache2
+[WARNING ] TCP Publish Client encountered an exception while connecting to /var/run/salt/master/master_event_pub.ipc: StreamClosedError('Stream is closed'), will reconnect in 1 seconds -   File "/usr/bin/salt", line 11, in <module>
+    sys.exit(salt_main())
+
+  File "/opt/saltstack/salt/lib/python3.10/site-packages/salt/scripts.py", line 528, in salt_main
+    client.run()
+
+  File "/opt/saltstack/salt/lib/python3.10/site-packages/salt/cli/salt.py", line 192, in run
+    for full_ret in cmd_func(**kwargs):
+
+  File "/opt/saltstack/salt/lib/python3.10/site-packages/salt/client/__init__.py", line 815, in cmd_cli
+    self.pub_data = self.run_job(
+
+  File "/opt/saltstack/salt/lib/python3.10/site-packages/salt/client/__init__.py", line 387, in run_job
+    pub_data = self.pub(
+
+  File "/opt/saltstack/salt/lib/python3.10/site-packages/salt/client/__init__.py", line 1904, in pub
+    if listen and not self.event.connect_pub(timeout=timeout):
+
+  File "/opt/saltstack/salt/lib/python3.10/site-packages/salt/utils/event.py", line 323, in connect_pub
+    self.subscriber = salt.utils.asynchronous.SyncWrapper(
+
+  File "/opt/saltstack/salt/lib/python3.10/site-packages/salt/utils/asynchronous.py", line 76, in __init__
+    self.obj = cls(*args, **kwargs)
+
+  File "/opt/saltstack/salt/lib/python3.10/site-packages/salt/transport/base.py", line 210, in ipc_publish_client
+    return publish_client(opts, io_loop, **kwargs)
+
+  File "/opt/saltstack/salt/lib/python3.10/site-packages/salt/transport/base.py", line 152, in publish_client
+    return salt.transport.tcp.PublishClient(
+
+  File "/opt/saltstack/salt/lib/python3.10/site-packages/salt/transport/tcp.py", line 220, in __init__
+    super().__init__(opts, io_loop, **kwargs)
+
+  File "/opt/saltstack/salt/lib/python3.10/site-packages/salt/transport/base.py", line 398, in __init__
+    super().__init__()
+
+
+[ERROR   ] Request client send timedout
+
+Elikkä omalla tulkinnalla ei saada yhteyttä salttiin, joten tarkistin saltin statuksen komennolla "sudo systemctl status salt-master.service" (käytiin läpi Karvisen luennolla 2.5.2025) Sekä paketin asennus komento on väärin. Komennosta puuttuu "state.single", mikä tekee tarkistuksen ja, jos puuttuu niin asentaa.
+
+![h2_e1](https://github.com/user-attachments/assets/c58d9e3f-016e-489c-b322-1fab477e9006)
+
+Epäonnistunut, koska "oom-kill" Trevorin kirjoituksen perusteella työmuisti on täyttynyt, joten linuxi on sulkenut saltin tästä syystä.
+
+Komennolla "sudo systemctl enable --now salt-master" käynnistin saltin, ja tarkistin statuksen uudestaan.
+
+![h2_e2](https://github.com/user-attachments/assets/ce1a0025-9cea-4eeb-aa79-aa531d162409)
+
+Lähti toimimaan.
+
+Asensin apachen komennolla "sudo salt '*' pkg.install apache2 ja tarkistin komennolla "sudo salt '*' state.single pkg.installed apache2"
+
+![h2_e5](https://github.com/user-attachments/assets/d6a67527-7017-42fe-8e8d-eb94002723e1)
+
+Lisäsin orjakoneelle tiedoston "masterTELLS" komennolla "sudo salt '*' state.single file.managed '/tmp/masterTELLS'"
+
+![h2_e4](https://github.com/user-attachments/assets/3a441e26-1b35-4f8b-bdf4-0f352811422e)
+
+* '*' - suorittaa salt komennon kaikille, jos tilalle laitetaan 'slave001', niin sitten asennettaan vain tälle orjalle. 
 
 ## Lähteet:
 
@@ -234,3 +296,5 @@ Stack Overflow: Viestiketju, What is the difference between hashicorp/precise64 
 wpscholar: Vagrant Cheat Sheet. Luettavissa: (https://gist.github.com/wpscholar/a49594e2e2b918f4d0c4) Luettu 7.4.2025
 
 Ask Ubuntu: Command to append line to a text file without opening an editor. Luettavissa: (https://askubuntu.com/questions/21555/command-to-append-line-to-a-text-file-without-opening-an-editor#21559) Luettu 7.4.2025
+
+Trevor 2025: Out of Memory Killer. Luettavissa: (https://learn.redhat.com/t5/Platform-Linux/Out-of-Memory-Killer/td-p/48828) Luettu 7.4.2025
