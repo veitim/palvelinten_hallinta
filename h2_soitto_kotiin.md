@@ -15,13 +15,23 @@ Isäntäkone:
 * GPU: NVIDIA GeForce RTX 2070
 * BIOS: E17E9IMS, 10A
 
-##
+## x) tiiviste
 
-##
+###
 
-##
+###
 
-##
+###
+
+## a) Hello vagrant!
+
+## b) Vagrantilla uusi linux virtuaalikone
+
+## c) Kaksin kaunihimpi
+
+## d) herra-orja
+
+## e) Kokeile vähintään kahta tilaa verkossa
 
 ## Lähteet:
 
