@@ -1,6 +1,6 @@
 # h2 Soitto Kotiin
 
-Tämä raportti on kirjoitettu 7.4.2025 klo. 14.00 -  välisenä aikana.
+Tämä raportti on kirjoitettu 7.4.2025 - 8.4.2025 klo. 14.00 - 00.30 välisenä aikana.
 
 Raportissa on tehty Tero Karvisen Palvelinten Hallinta kurrsin tehtäviä, jotka löytyvät materiaaleineen sivustolta: (https://terokarvinen.com/palvelinten-hallinta/)
 
@@ -17,11 +17,72 @@ Isäntäkone:
 
 ## x) tiiviste
 
-###
+### Two Machine Virtual Network With Debian 11 Bullseye and Vagrant
 
-###
+Debianilla tai ubuntulla vagrantin asennus:
 
-###
+* $ sudo apt-get update
+* $ sudo apt-get install vagrant virtualbox
+
+Koneelle t001 kirjaudutaan vagrantilla:
+
+* vagrant ssh t001
+
+Palataan takaisin isäntä käyttikselle:
+
+* exit
+
+Vagrantilla tehdyt koneet tuhotaan:
+
+* vagrant destroy
+
+### Salt Vagrant - automatically provision one master and two slaves
+
+Koneiden käynnistys:
+
+* vagrant up
+
+Orjien hyväksyntä:
+
+* sudo salt-key -A
+
+Yhteys orjiin testataan:
+
+* sudo salt '*' test.ping
+
+### Salt Quickstart – Salt Stack Master and Slave on Ubuntu Linux
+
+Asennetaan master koneelle:
+
+* sudo apt-get -y install salt-master
+
+Asennetaan orja koneille:
+
+* sudo apt-get -y install salt-minion
+
+Tarkistetaan ketä ollaan:
+
+* hostname -I
+
+Master koneella täytyy avata reiät tulimuuriin (jos käytössä) salttia varten portteihin:
+* 4505/tcp
+* 4506/tcp
+
+Minion tiedostoa voidaan muokata komennolla
+
+* slave$ sudoedit /etc/salt/minion
+
+minion tiedostosta pitää löytyä:
+
+* master: osoite
+
+minion tiedostossa orjalle voi antaa nimen
+
+* id: nimi
+
+Komennolla:
+
+* sudo salt '*' cmd.run 'whoami' - voidaan tarkastaa orjat.
 
 ## a) Hello vagrant!
 
@@ -257,7 +318,7 @@ Elikkä omalla tulkinnalla ei saada yhteyttä salttiin, joten tarkistin saltin s
 
 ![h2_e1](https://github.com/user-attachments/assets/c58d9e3f-016e-489c-b322-1fab477e9006)
 
-Epäonnistunut, koska "oom-kill" Trevorin kirjoituksen perusteella työmuisti on täyttynyt, joten linuxi on sulkenut saltin tästä syystä.
+Epäonnistunut, koska "oom-kill" Trevorin kirjoituksen perusteella (https://learn.redhat.com/t5/Platform-Linux/Out-of-Memory-Killer/td-p/48828) työmuisti on täyttynyt, joten linuxi on sulkenut saltin tästä syystä.
 
 Komennolla "sudo systemctl enable --now salt-master" käynnistin saltin, ja tarkistin statuksen uudestaan.
 
