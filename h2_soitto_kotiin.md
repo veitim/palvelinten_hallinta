@@ -90,13 +90,13 @@ Latasin vagrantin sivustolta: (https://developer.hashicorp.com/vagrant/install)
 
 Valitsin seuraavan version, koska käytän windowsia.
 
-[a](images/h2_a1.png)
+![a](images/h2_a1.png)
 
 Asensin ohjelman ajamalla tämän tuplaklikkaamalla installer-kuvaketta. Asennuksen jälkeen käynnistin koneen uudeestaan.
 
 Windowsin komentotulkissa komennolla "vagrant version" pystyi tarkistamaan, että onko vagrant asennettuna. (Vagrantin dokumentaatiot löytyvät osoitteesta: https://developer.hashicorp.com/vagrant/docs)
 
-[a](images/h2_a2.png)
+![a](images/h2_a2.png)
 
 Näyttäisi olevan.
 
@@ -106,19 +106,19 @@ Lueskelin Antti Salmisen raporttia: (https://oispadotka.wordpress.com/2020/05/12
 
 Käytin komentoa "vagrant box add hashicorp/bionic64", mikä asensi kehitysympäristön. Jos oikein olen ymmärtänyt, niin tämä asensi asetukset bionic64 käyttöjärjestelmää varten. Tämä on Stephen Jenningsin mukaan Ubuntu 18.04 versio. Eli en uskoakseni olisi tarvinnut tätä asennusta, koska aion käyttää debiania. Tämän lisäksi asensin boxin C-asemalle, minne tätä en halua.
 
-[b](images/h2_b1.png)
+![b](images/h2_b1.png)
 
 Tein tässä vaiheessa uuden hakemiston D-asemalle ja navigoin komentutulkissa tänne. Tänne aion siis asentaa vagrantilla virtuaalikoneita. Kokeilin Karvisen sivulta löytyvää "init debian/bookworm64" komentoa, minkä pitäisi virtuaalikone alustaa.
 
-[b](images/h2_b2.png)
+![b](images/h2_b2.png)
 
 Tämä onnistui eli nyt on vagrantfile ja pitäisi pystyä virtuaalikone käynnistämään komennolla "vagrant up".
 
-[b](images/h2_b3.png)
+![b](images/h2_b3.png)
 
 Boxia debian/bookworm64 ei löydy, mutta vagrant automaattisesti tämän boxin haki ja asensi, mikä teki aikaisemmasta boxin lisäämisestä todellakin turhan.
 
-[b](images/h2_b4.png)
+![b](images/h2_b4.png)
 
 Virtuaalikone asennettu ja näyttää pyörivän.
 
@@ -138,7 +138,7 @@ Oletan, että scriptit ajetaan koneiden sisällä.
 
 Muokkasin vagranfilestä aluksi riviä 'config.vm.box = "debian/bullseye64"' seuraavasti  'config.vm.box = "debian/bookworm64"' Koska bookworm on tutumpi. Eli virtuaalikoneet asentuvat debian bookworm ympäristöön bullseyen sijaan.
 
-[c](images/h2_c1.png)
+![c](images/h2_c1.png)
 
 Sitten kokeilin "vagrant up" komentoa.
 
@@ -146,7 +146,7 @@ Sehän toimi ja koneet t001 ja t002 tehtiin debian/bookworm64 alustaa käyttäen
 
 Komennolla "vagrant ssh t001" kirjauidin t001 koneelle ja komennolla "ip addr" sain selville, että ip-osoite on yllättäen "192.168.88.101". "Exit komennolla kirjauduin ulos. Tarkistin myös t002 koneen ip:n (192.168.88.102) ja sitten pingasin t002 koneelta t001 koneen osoitetta komennolla "$ ping 192.168.88.101"
 
-[c](images/h2_c2.png)
+![c](images/h2_c2.png)
 
 Koneet keskustelevat keskenään.
 
@@ -156,7 +156,7 @@ Aloitin tuhoamalla virtaalikoneet käyttäen komentoa "vagrant destroy".
 
 Seuraavaksi muokkasin vagrantfileä seuraavasti
 
-[d](images/h2_d1.png)
+![d](images/h2_d1.png)
 
 Eli lisäsin palomuurin asennuksen ja käyttöön oton ja nimesin ensimmäisen koneen masteriksi sekä toisen koneen s001:ksi.
 
@@ -164,51 +164,51 @@ Sitten taast ajamaan komentoa "vagrant up". Epäonnistuin, sillä unohdin tallen
 
 Uusi yritys tallennuksen jälkeen. Muuten näyttäisi onnistuneen, mutta palomuurin päälle laittaminen ei onnistuinut.
 
-[d](images/h2_d2.png)
+![d](images/h2_d2.png)
 
 Seuraavaksi kirjauduin master koneelle ja pingasin s001 konetta sekä laitoin palomuurin päälle. Sitten avastin portit 4505/tcp ja 4506/tcp komennolla "sudo ufw allow 'portti'" Tämän jälkeen kävin laittamassa s001 koneelta palomuurin päälle. Sitten buuttasin koneet "vagrant halt" sammuttaa ja "vagrant up" käynnistää.
 
-[d](images/h2_d4.png)
+![d](images/h2_d4.png)
 
 Palomuuri näytttäisi estävän vagrantilta pääsyn koneelle. Eli alusta. Tuhosin koneet ("vagrant destroy"). Muokkasin vagrantfileä siten, ettei koneet yritä käynnistää palomuuuria. Asesnsin koneet uudestaan ("vagrant up").
 
 Muistaakseni ssh käyttää porttia 22, joten avasin kyseisen portin sekä portit 4505 ja 4506 master koneelta. Käynnistin palomuurin ja buuttasin koneet.
 
-[d](images/h2_d5.png)
+![d](images/h2_d5.png)
 
 Näyttäisi toimivan, joten käynnistin koneelta s001 palomuurin ja avasin reiän 22, jotta ssh pääsee palomuurin ohi. Uudestaan buuttaus.
 
-[d](images/h2_d6.png)
+![d](images/h2_d6.png)
 
 Kirjauduin master koneelle ja pingasin s001 konetta.
 
-[d](images/h2_d7.png)
+![d](images/h2_d7.png)
 
 Näyttäisi toimivan, joten seuraavaksi asensin salt masterin. Tässä vaiheessa heräsi ajtus, että nämä salt-pakettien asennukset voisi kyllä viedä vagrantfileen. Päätin kokeilla mitä käy, jos vain asentaa salt-maseterin master koneelle ja salt-minionin s001 koneelle. Uskoisin, että homma ei toimi.
 
-[d](images/h2_d8.png)
+![d](images/h2_d8.png)
 
 Pitkälle ei päästy, koska salt paketit puuttuvat. Sammutin koneet. Ja kävin päivittämässä vagrantfileä.
 
-[d](images/h2_d9.png)
+![d](images/h2_d9.png)
 
 Lisäsin tiedostoon saltpakettien asennus komennot, näin tämän onnistuessa luottamussuhde on tehty. Seuraavaksi kokeilin komentoa "vagrant reload" komentoa minkä pitäisi uudeelleen käynnistää koneet samalla lataamalla uudet konfiguraatiot vagrantfilestä. Paketit eivät näin asentuneet. Kokeilen vielä "vagrant reload --provision" komentoa.
 
-[d](images/h2_d10.png)
+![d](images/h2_d10.png)
 
 curl komentoa ei löydy, joten lisäsin vagranfileen curlin asennuksen "sudo apt-get install curl". Ja uudestaan "vagrant reload --provision" Sitten vielä -y, jotta hyväksytään kaikki turhat varmistelut. Tein saman palomuuri asetusten kohdalla. Sitten tajusinkin, että voinkin kirjoittaa vagrantfilen konekohtaisesti. Miksi säätää mitään manuaalisesti, kun voi kaiken automatisoida tjsp.
 
-[d](images/h2_d14.png)
+![d](images/h2_d14.png)
 
 Elikkä yllä lopullinen vagrantfile. En saanut palomuuria automaattisesti käynnistettyä, koska en osannut ohittaa y/n promptia. Eli palomuurit täytyy käydä laittamassa päälle kirjautumalla koneille. Minkä jälkeen pitää buutata koneet, käytin komentoa "vagrant halt" ja tämän jälkeen "vagrant up".
 
 Sitten master koneella kokeilemaan komentoa "sudo salt-key -A"
 
-[d](images/h2_d12.png)
+![d](images/h2_d12.png)
 
 Näyttäisi toimivan. Jostain syystä tämä ei toiminut ennen, kuin koneet oltiin buutattu, vaikka "sudo systemctl restart salt-minion.service" komentoa käyttikin. Jokatapauksessa seuraavaksi ajoin master koneelta komennon "sudo salt '*' cmd.run 'whoami'".
 
-[d](images/h2_d13.png)
+![d](images/h2_d13.png)
 
 Orjakone slave001 kertoo olevansa root. Eli tämä tehty.
 
