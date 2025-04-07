@@ -121,7 +121,7 @@ Pitkälle ei päästy, koska salt paketit puuttuvat. Sammutin koneet. Ja kävin 
 
 Lisäsin tiedostoon saltpakettien asennus komennot, näin muodostaen luottamussuhteen. Seuraavaksi kokeilin komentoa "vagrant reload" komentoa minkä pitäisi uudeelleen käynnistää koneet samalla lataamalla uudet konfiguraatiot vagrantfilestä. Paketit eivät näin asentuneet. Kokeilen vielä "vagrant reload --provision" komentoa.
 
-Harmi, curl komentoa ei löydy joten paketit eivät kansioihin tulleet. En jaksa tässä vaiheessa selvittämään, että millä komennolla rubyllä tämän voisi tehdä, joten asennan paketit koneille manuaalisesti. Kävin kanssa poistamassa vagranfilestä komennot millä lisätään paketit.
+curl komentoa ei löydy, joten lisäsin vagranfileen curlin asennuksen "sudo apt-get install curl". Ja uudestaan "vagrant reload --provision" Sitten vielä -y, jotta hyväksytään kaikki turhat varmistelut. Tein saman palomuuri asetusten kohdalla.
 
 [d](images/h2_d3.png)
 
