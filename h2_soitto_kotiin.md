@@ -25,7 +25,17 @@ Isäntäkone:
 
 ## a) Hello vagrant!
 
+Latasin vagrantin sivustolta: (https://developer.hashicorp.com/vagrant/install)
+
+Valitsin seuraavan version, koska käytän windowsia.
+
+[a](images/h2_a1.png)
+
+Asensin ohjelman ajamalla tämän tuplaklikkaamalla kuvaketta. Asennuksen jälkeen käynnistin koneen uudeestaan.
+
 ## b) Vagrantilla uusi linux virtuaalikone
+
+
 
 ## c) Kaksin kaunihimpi
 
