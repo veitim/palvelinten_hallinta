@@ -1,6 +1,6 @@
 # h3 Infraa Koodina
 
-Tämä raportti on kirjoitettu 14.4.2025 klo. 14.30 -  välisenä aikana.
+Tämä raportti on kirjoitettu 14.4.2025 klo. 14.30 - 20.50 välisenä aikana.
 
 Raportissa on tehty Tero Karvisen Palvelinten Hallinta kurrsin tehtäviä, jotka löytyvät materiaaleineen sivustolta: (https://terokarvinen.com/palvelinten-hallinta/)
 
