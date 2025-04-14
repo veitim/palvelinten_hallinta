@@ -154,6 +154,12 @@ Eli ajoin salttia lokaalisti suorittaen "t3" moduulia, kun sinne uutta lisäsin.
 
 Kuten kuvassa näkyy, niin 3 onnistumista ilman muutoksia ja 1 muutosten kanssa. Eli moduuli tekee tiedoston nimeltä "uusjuttu", asentaa paketin "tree", käynnistää apachen sekä tekee käyttäjän nimeltä turbo.
 
+Ajoin vielä komennon "sudo salt '*' state.apply t3" muutaman kerran nähdääkseni, että tämä myös toimii orjille. Komennolla "sudo sal 'slave001" state.apply t3" ajettaisiin moduuli vain koneella "slave001", jos jostain syystä haluaa vain yhdelle koneelle muutoksia tehdä.
+
+![c](images/h3_c3.png)
+
+Näyttäisi toimivan, kun mikään ei enään muutu. 
+
 ## Lähteet:
 
 T. Karvinen 2014: Hello Salt Infra-as-Code. Luettavissa: (https://terokarvinen.com/2024/hello-salt-infra-as-code/) Luettu 14.4.2025
