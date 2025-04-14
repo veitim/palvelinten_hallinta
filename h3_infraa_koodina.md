@@ -156,7 +156,7 @@ Kuten kuvassa näkyy, niin 3 onnistumista ilman muutoksia ja 1 muutosten kanssa.
 
 Ajoin vielä komennon "sudo salt '*' state.apply t3" muutaman kerran nähdääkseni, että tämä myös toimii orjille.
 
-(Komennolla "sudo sal 'slave001" state.apply t3" ajettaisiin moduuli vain koneella "slave001", jos jostain syystä haluaa vain yhdelle koneelle muutoksia tehdä.)
+(Komennolla "sudo salt 'slave001' state.apply t3" ajettaisiin moduuli vain koneella "slave001", jos jostain syystä haluaa vain yhdelle koneelle muutoksia tehdä.)
 
 ![c](images/h3_c3.png)
 
