@@ -77,9 +77,9 @@ Lists and dictionaries - YAML block structures
 
 ## a) Hei infrakoodi
 
-Navigoin komentotulkissa hakemistoon missä vagranfile sijaitsee ja käynnistin virtuaalikoneet komennolla: "vagrant up".
+Navigoin komentotulkissa hakemistoon missä aikaisemman tehtävän vagranfile sijaitsee ja käynnistin silloin tekemäni virtuaalikoneet komennolla: "vagrant up".
 
-Kirjaudin master koneelle komennolla "vagrant ssh master" ja tein komennolla "sudo mkdir -p /srv/salt/hello/" kansion "hello" hakemistoon "/srv/salt/". Kansiota "hello" käytetään tässä tehtävässä moduulina.
+Kirjaudin master koneelle komennolla "vagrant ssh master" ja tein komennolla "sudo mkdir -p /srv/salt/hello/" kansion "hello" hakemistoon "/srv/salt/". Kansiota "hello" käytetään tässä tehtävässä moduulina. Isäntäkoneelle siksi, että täältä nämä ajot halutaan suorittaa orjille.
 
 ![a](images/h3_a1.png)
 
@@ -92,14 +92,78 @@ Seuraavaksi ajoin tekemääni moduulia lokaalisti komennolla "sudo salt-call --l
 
 ![a](images/h3_a2.png)
 
+Homma näyttäisi toimivan. Eli "/tmp/" hakemistoon tehtiin tiedosto nimeltä "hellotimo". Tässä vaiheessa rupesin miettimään, että mitä tapahtuu, jos lisään "init.sls" tiedostoon toisen koodin pätkän.
+Lisäsin "init.sls" tiedostoon seuraavat rivit:
+
+    /tmp/shutuptimo:
+      file.managed
+
+![a](images/h3_a4.png)
+
+Ja ajoin taas tämän lokaalisti.
+
+![a](images/h3_a3.png)
+
+Saltti ei tässä tee muuta, kuin tarkista, että tiedostot "hellotimo" ja "shutuptimo" löytyvät "/tmp/" hakemistosta, jos ei niin tehdään nämä. Yllä näkyy, että on onnistunut yhdellä muutoksella. Muutos on sitten tämä "shutuptimo" tiedoston luonti.
+
 ## b) Aja esimerkki sls-tiedostosi verkon yli
 
-## c) Sls-tiedosto 2 tilafunktiolla
+Nyt pitikin sitten ajaa äskeinen moduuli orjille. Tarkistetaan yhtys orjiin komennolla "sudo salt '*' test.ping"
+
+![b](images/h3_b1.png)
+
+Yhteys näyttäisi pelaavan. Seuraavaksi kokeilin ajaa "hello" moduulia orjalle. Kokeilin komentoa "sudo salt-call '*' state.apply hello".
+
+![b](images/h3_b3.png)
+
+Ei toiminut sillä "salt-call" komentoa käytetään, kun ajetaan lokaalisti jotain. Eli tätä komentoa voisin ymmärtääkseni käyttää orjakoneelta käsin hakeakseni tälle yksittäiselle orjakoneelle isäntä koneelta jotain. Esim. tämän "hello" moduulin. (https://docs.saltproject.io/en/latest/ref/cli/salt-call.html)
+
+Uusi yritys komennolla "sudo salt '*' state.apply hello"
+
+![b](images/h3_b2.png)
+
+Slave001 koneelle on onnistuneesti tapahtunut 2 muutosta. "hellotimo" ja "shutuptimo" tiedostot on tehty. Eli voisin tästä päätellä tämän onnistuneen. Kävin vielä tarkistamassa. Kirjauduin orjakoneelle ja katsoin mitä "/tmp/" hakemistosta löytyy.
+
+![b](images/h3_b4.png)
+
+Kiltisti on tiedostot asentuneet. Olen siis onnistunut. 
+
+Tässä vaiheessa huomasin, että tämä pitikin ajaa orjalla. Eli olen tämän ajanut masterilta orjalle, mutta minun piti orjalta hakea tämä. Tuhosin siis tiedostot orjalta ja kokeilin. 
+
+Nyt pitäisi tuon "salt-call" pyynnön toimia, eli käytin komentoa 
+
+    sudo salt-call '*' state.apply hello
+
+Ja tämähän meni väärin sillä en suorita pyyntöä kaikille "'*'", vaan haen tavaraa "call" kutsulla isännältä, eli täytyy käyttää komentoa: 
+    
+    sudo salt-call state.apply hello
+
+![b](images/h3_b6.png)
+
+Noniin sehän toimi! Ja muutoksia tapahtui, koska tuhosin tiedostot aiemmin.
+
+## c) sls-tiedosto 2 tilafunktiolla
+
+Kirjauduin isäntäkoneelle. Tein uuden moduulin "t3" ja tänne init.sls tiedoston. Kokeilin tilamuuttujia "file, pkg, service ja user" siten, että aloitin filestä ja lisäsin aina yhden tilamuuttujan sls tiedostoon, kun sain aikaisemman tilamuuttujan toimimaan.
+
+![c](images/h3_c1.png)
+
+Eli ajoin salttia lokaalisti suorittaen "t3" moduulia, kun sinne uutta lisäsin. 
+
+![c](images/h3_c2.png)
+
+Kuten kuvassa näkyy, niin 3 onnistumista ilman muutoksia ja 1 muutosten kanssa. Eli moduuli tekee tiedoston nimeltä "uusjuttu", asentaa paketin "tree", käynnistää apachen sekä tekee käyttäjän nimeltä turbo.
 
 ## Lähteet:
 
 T. Karvinen 2014: Hello Salt Infra-as-Code. Luettavissa: (https://terokarvinen.com/2024/hello-salt-infra-as-code/) Luettu 14.4.2025
 
 Salt Project: Salt overview. Luettavissa: (https://docs.saltproject.io/salt/user-guide/en/latest/topics/overview.html#rules-of-yaml) Luettu 14.4.2025
+
+Salt Project: Salt-call. Luettavissa: (https://docs.saltproject.io/en/latest/ref/cli/salt-call.html) Luettu 14.4.2025
+
+Salt Project: How Do I Use Salt States?. Luettavissa: (https://docs.saltproject.io/en/latest/topics/tutorials/starting_states.html) Luettu 14.4.2025
+
+Salt Project: salt.states.pkg Luettavissa: (https://docs.saltproject.io/en/latest/ref/states/all/salt.states.pkg.html) Luettu 14.4.2025
 
 
