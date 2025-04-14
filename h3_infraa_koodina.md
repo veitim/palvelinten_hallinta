@@ -142,7 +142,7 @@ Ja tämähän meni väärin sillä en suorita pyyntöä kaikille "'*'", vaan hae
 
 Noniin sehän toimi! Ja muutoksia tapahtui, koska tuhosin tiedostot aiemmin.
 
-## c) sls-tiedosto 2 tilafunktiolla
+## c) sls-tiedosto 2 tilafunktiolla (tai neljällä)
 
 Kirjauduin isäntäkoneelle. Tein uuden moduulin "t3" ja tänne init.sls tiedoston. Kokeilin tilamuuttujia "file, pkg, service ja user" siten, että aloitin filestä ja lisäsin aina yhden tilamuuttujan sls tiedostoon, kun sain aikaisemman tilamuuttujan toimimaan.
 
