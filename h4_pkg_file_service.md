@@ -127,7 +127,9 @@ Ajetaan nyt vielä orjalle ja katsotaan mitä tapahtuu.
 
 ![a](images/h4_a5.png)
 
-Näin näyttäisi käyneen, eli minun käsittääkseni tämä nyt toimii. Mutta olisi varmaan riittänyt, jos olisi käyttänyt Karvisen vinkeistä löytyvää komentoa:
+Näin näyttäisi käyneen, eli minun käsittääkseni tämä nyt toimii. Orja siis käyttää moduulin sisällä olevaa index.html, mitä ei ole muokattu. Tästä syystä orjalla näkyy "vanha" index.html.
+
+Tässä tehtvässä olisi varmaan riittänyt, jos olisi käyttänyt Karvisen vinkeistä löytyvää komentoa:
 
     echo "Hei"|sudo tee /var/www/html/index.html
 
