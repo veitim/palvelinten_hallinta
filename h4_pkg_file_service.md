@@ -149,7 +149,7 @@ Curlilla localhost
 
 ![a](images/h4_a8.png)
 
-Apachen oletus sivun lataa. Seuraavaksi käytin vinkkiosion komentoa "echo "Hei"|sudo tee /var/www/html/index.html"
+Apachen oletus sivun lataa. Seuraavaksi käytin vinkkiosion komentoa "echo "Hei"|sudo tee /var/www/html/index.html". Ja curlilla tarkistin tuloksen.
 
 ![a](images/h4_a9.png)
 
