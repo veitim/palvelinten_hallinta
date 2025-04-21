@@ -121,17 +121,13 @@ Koska tein näköjään tässä samalla c tehtävää, niin näytän nyt vielä,
 
 Ajetaan nyt vielä orjalle ja katsotaan mitä tapahtuu.
 
-![a](images/h4_a3.png)
-
-4 muutosta ja 1 onnistuminen (apache2 asennettu entuudestaan koneelle).
-
 ![a](images/h4_a4.png)
 
-Ja curli näyttää, että apachen default sivu vaihdettu myös orjalta.
+4 muutosta ja 1 onnistuminen (apache2 asennettu entuudestaan koneelle). Seuraavaksi tarkistin, että oletussivu vaihtunut orjalla.
 
 ![a](images/h4_a5.png)
 
-Eli minun käsittääkseni tämä nyt toimii. Mutta olisi varmaan riittänyt, jos olisi käyttänyt Karvisen vinkeistä löytyvää komentoa:
+Näin näyttäisi käyneen, eli minun käsittääkseni tämä nyt toimii. Mutta olisi varmaan riittänyt, jos olisi käyttänyt Karvisen vinkeistä löytyvää komentoa:
 
     echo "Hei"|sudo tee /var/www/html/index.html
 
