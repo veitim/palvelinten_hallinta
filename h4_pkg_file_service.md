@@ -111,9 +111,9 @@ easymode moduulin ajoin komennolla:
 
     sudo salt-call --local state.apply easymode
 
-Kuten näkyy, niin kaikki ovat onnistuneesti asentuneet. (muutoksia ei tapahdu, kun olen ajanut tämän muutaamaan otteeseen)
-
 ![a](images/h4_a1.png)
+
+Kuten näkyy, niin kaikki ovat onnistuneesti asentuneet. (muutoksia ei tapahdu, kun olen ajanut tämän muutaamaan otteeseen)
 
 Koska tein näköjään tässä samalla c tehtävää, niin näytän nyt vielä, että käyttäjänä voi localhostissa pyörivää sivua muokata ilman sudo oikeuksia. 
 
@@ -125,9 +125,11 @@ Ajetaan nyt vielä orjalle ja katsotaan mitä tapahtuu.
 
 4 muutosta ja 1 onnistuminen (apache2 asennettu entuudestaan koneelle).
 
+![a](images/h4_a4.png)
+
 Ja curli näyttää, että apachen default sivu vaihdettu myös orjalta.
 
-![a](images/h4_a4.png)
+![a](images/h4_a5.png)
 
 Eli minun käsittääkseni tämä nyt toimii. Mutta olisi varmaan riittänyt, jos olisi käyttänyt Karvisen vinkeistä löytyvää komentoa:
 
@@ -135,9 +137,9 @@ Eli minun käsittääkseni tämä nyt toimii. Mutta olisi varmaan riittänyt, jo
 
 Tämä olisi muokannut apache2 oletussivun näyttämään tekstin "Hei", mikä olisi riittänyt apache2 korvaamisessa. Koska en tajunnut ottaa kuvia, kun hihat olivat tyhjät, niin tein nyt tämän vielä. Eli poistetaan kaikki.
 
-![a](images/h4_a5.png)
-
 ![a](images/h4_a6.png)
+
+![a](images/h4_a7.png)
 
 Eli nyt ei ole apachea eikä public_html hakemistoa sisältöineen. Käytin vielä tässä komentoa:
 
@@ -149,15 +151,13 @@ Koska conffi tiedostot olivat jääneet ja halusin poistaa kaikki apache2:n conf
 
 Curlilla localhost
 
-![a](images/h4_a7.png)
-
-Apachen oletus sivun lataa. Seuraavaksi käytin vinkkiosion komentoa "echo "Hei"|sudo tee /var/www/html/index.html"
- 
 ![a](images/h4_a8.png)
 
-Eli apach2 asennettuna käsin ja etusivu vaihdettu. Sitten automaatio, eli ajan tekemäni easymode moduulin.
+Apachen oletus sivun lataa. Seuraavaksi käytin vinkkiosion komentoa "echo "Hei"|sudo tee /var/www/html/index.html"
 
 ![a](images/h4_a9.png)
+
+Eli apach2 asennettuna käsin ja etusivu vaihdettu. Sitten automaatio, eli ajan tekemäni easymode moduulin.
 
 ![a](images/h4_a10.png)
 
