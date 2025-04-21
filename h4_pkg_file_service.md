@@ -1,6 +1,6 @@
 # h4_Pkg_file_service
 
-Tämä raportti on kirjoitettu 21.4.2025 - 22.4.2025 klo. 15.30 - 00.30 välisenä aikana.
+Tämä raportti on kirjoitettu 21.4.2025 - 22.4.2025 klo. 15.30 - 00.55 välisenä aikana.
 
 Raportissa on tehty Tero Karvisen Palvelinten Hallinta kurrsin tehtäviä, jotka löytyvät materiaaleineen sivustolta: (https://terokarvinen.com/palvelinten-hallinta/)
 
@@ -211,7 +211,41 @@ Ja automaatio toimii.
 
 ## b) SSHouto. Lisää uusi portti, jossa SSHd kuuntelee.
 
+Lähdin tekemään uutta moduulia nimeltä ssh. ssh:n sisälle tein init.sls tiedoston ja files hakemiston.
 
+![a](images/h4_b2.png)
+
+init.sls on melkein suoraan Tero Karvisen esimerkistä (https://terokarvinen.com/2018/04/03/pkg-file-service-control-daemons-with-salt-change-ssh-server-port/?fromSearch=karvinen%20salt%20ssh)
+
+![a](images/h4_b3.png)
+
+files hakemistoon tein sshd.config tiedoston, minne kopioin myös Karvisen esimerkin mukaiset conffit.
+
+![a](images/h4_b4.png)
+
+Seuraavaksi ajoin moduulin orjalle muutamaan otteeseen.
+
+    sudo salt '*' state.apply ssh
+
+![a](images/h4_b5.png)
+
+Kaikki toiminee. Sitten pitikin availla palomuurista portti 8888 orjalla, jotta tätä voisi käyttää (minulla palomuuri käytössä).
+
+    sudo salt '*' cmd.run "sudo ufw allow 8888/tcp"
+
+Ja
+
+    sudo salt '*' cmd.run "sudo ufw status"
+
+![a](images/h4_b6.png)
+
+Tämän jälkeen kokeilin yhdistää orjaan:
+
+    ssh -p 8888 vagrant@192.168.88.102
+
+![a](images/h4_b1.png)
+
+Näyttäisi yhteys toimivan, vaikka en salasanaa nyt muistakkaan.
 
 ## Lähteet: 
 
