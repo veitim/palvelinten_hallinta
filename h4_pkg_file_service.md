@@ -1,6 +1,6 @@
 # h4_Pkg_file_service
 
-Tämä raportti on kirjoitettu 21.4.2025 klo. 15.30 -  välisenä aikana.
+Tämä raportti on kirjoitettu 21.4.2025 - 22.4.2025 klo. 15.30 - 00.30 välisenä aikana.
 
 Raportissa on tehty Tero Karvisen Palvelinten Hallinta kurrsin tehtäviä, jotka löytyvät materiaaleineen sivustolta: (https://terokarvinen.com/palvelinten-hallinta/)
 
@@ -19,8 +19,56 @@ BIOS: E17E9IMS, 10A
 
 ### Karvinen 2018: [Pkg-File-Service – Control Daemons with Salt – Change SSH Server Port](https://terokarvinen.com/2018/04/03/pkg-file-service-control-daemons-with-salt-change-ssh-server-port/?fromSearch=karvinen%20salt%20ssh)
 
-* 
-* 
+SSH-tilan tekeminen:
+    
+    openssh-server:
+      pkg.installed
+        /etc/ssh/sshd_config:
+    file.managed:
+      - source: salt://sshd_config
+    sshd:
+      service.running:
+        - watch:
+        - file: /etc/ssh/sshd_config
+
+     $ cat /srv/salt/sshd_config
+
+sshd.config tiedoston asetukset:
+
+    # DON'T EDIT - managed file, changes will be overwritten
+    Port 8888
+    Protocol 2
+    HostKey /etc/ssh/ssh_host_rsa_key
+    HostKey /etc/ssh/ssh_host_dsa_key
+    HostKey /etc/ssh/ssh_host_ecdsa_key
+    HostKey /etc/ssh/ssh_host_ed25519_key
+    UsePrivilegeSeparation yes
+    KeyRegenerationInterval 3600
+    ServerKeyBits 1024
+    SyslogFacility AUTH
+    LogLevel INFO
+    LoginGraceTime 120
+    PermitRootLogin prohibit-password
+    StrictModes yes
+    RSAAuthentication yes
+    PubkeyAuthentication yes
+    IgnoreRhosts yes
+    RhostsRSAAuthentication no
+    HostbasedAuthentication no
+    PermitEmptyPasswords no
+    ChallengeResponseAuthentication no
+    X11Forwarding yes
+    X11DisplayOffset 10
+    PrintMotd no
+    PrintLastLog yes
+    TCPKeepAlive yes
+    AcceptEnv LANG LC_*
+    Subsystem sftp /usr/lib/openssh/sftp-server
+    UsePAM yes
+ 
+Yhteyden testaus:
+
+    $ nc -vz tero.example.com 8888
 
 ## a & c) Asenna Apache, korvaa sen testisivu ja varmista, että demoni käynnistyy.
 
