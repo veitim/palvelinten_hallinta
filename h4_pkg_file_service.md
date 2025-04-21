@@ -113,21 +113,21 @@ easymode moduulin ajoin komennolla:
 
 Kuten näkyy, niin kaikki ovat onnistuneesti asentuneet. (muutoksia ei tapahdu, kun olen ajanut tämän muutaamaan otteeseen)
 
-![a](images/h4_a11.png)
+![a](images/h4_a1.png)
 
 Koska tein näköjään tässä samalla c tehtävää, niin näytän nyt vielä, että käyttäjänä voi localhostissa pyörivää sivua muokata ilman sudo oikeuksia. 
 
-![a](images/h4_a9.png)
+![a](images/h4_a2.png)
 
 Ajetaan nyt vielä orjalle ja katsotaan mitä tapahtuu.
 
-![a](images/h4_a12.png)
+![a](images/h4_a3.png)
 
 4 muutosta ja 1 onnistuminen (apache2 asennettu entuudestaan koneelle).
 
 Ja curli näyttää, että apachen default sivu vaihdettu myös orjalta.
 
-![a](images/h4_a13.png)
+![a](images/h4_a4.png)
 
 Eli minun käsittääkseni tämä nyt toimii. Mutta olisi varmaan riittänyt, jos olisi käyttänyt Karvisen vinkeistä löytyvää komentoa:
 
@@ -135,9 +135,9 @@ Eli minun käsittääkseni tämä nyt toimii. Mutta olisi varmaan riittänyt, jo
 
 Tämä olisi muokannut apache2 oletussivun näyttämään tekstin "Hei", mikä olisi riittänyt apache2 korvaamisessa. Koska en tajunnut ottaa kuvia, kun hihat olivat tyhjät, niin tein nyt tämän vielä. Eli poistetaan kaikki.
 
-![a](images/h4_a14.png)
+![a](images/h4_a5.png)
 
-![a](images/h4_a15.png)
+![a](images/h4_a6.png)
 
 Eli nyt ei ole apachea eikä public_html hakemistoa sisältöineen. Käytin vielä tässä komentoa:
 
@@ -149,27 +149,23 @@ Koska conffi tiedostot olivat jääneet ja halusin poistaa kaikki apache2:n conf
 
 Curlilla localhost
 
-![a](images/h4_a16.png)
+![a](images/h4_a7.png)
 
 Apachen oletus sivun lataa. Seuraavaksi käytin vinkkiosion komentoa "echo "Hei"|sudo tee /var/www/html/index.html"
  
-![a](images/h4_a17.png)
+![a](images/h4_a8.png)
 
 Eli apach2 asennettuna käsin ja etusivu vaihdettu. Sitten automaatio, eli ajan tekemäni easymode moduulin.
 
-![a](images/h4_a18.png)
+![a](images/h4_a9.png)
+
+![a](images/h4_a10.png)
 
 Ja automaatio toimii.
 
 ## b) SSHouto. Lisää uusi portti, jossa SSHd kuuntelee.
 
-## c) v Asenna ja konfiguroi Apache ja Name Based Virtual Host
 
-## d) v Caddy. Asenna Caddy tarjoilemaan weppisivua.
-
-## e) v Nginx. Asenna Nginx (lausutaan engine-X) tarjoilemaan weppisivua. 
- 
-## f) v PostgreSQL. Asenna PostgreSQL-tietokannanhallintajärjestelmä.
 
 ## Lähteet: 
 
@@ -178,3 +174,5 @@ T. Karvinen 2025: Palvelinten Hallinta. Luettavissa: (https://terokarvinen.com/p
 T. Karvinen 2018: Palvelinten Hallinta. Luettavissa: (https://terokarvinen.com/2018/04/03/pkg-file-service-control-daemons-with-salt-change-ssh-server-port/?fromSearch=karvinen%20salt%20ssh) Luettu 21.4.2025
 
 Salt Project: Salt States. Luettavissa: (https://docs.saltproject.io/salt/user-guide/en/latest/topics/states.html) Luettu 21.4.2025
+
+Ask Ubuntu 2012: Viestiketjun vastaaja M. Waidyanatha, Permanently Removing apache2 Luettavissa: (https://askubuntu.com/questions/176964/permanently-removing-apache2) Luettu 21.4.2025
