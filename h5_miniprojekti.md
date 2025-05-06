@@ -1,32 +1,5 @@
 # h5 Miniprojekti
 
-sudo wget https://archive.kali.org/archive-keyring.gpg -O /usr/share/keyrings/kali-archive-keyring.gpg
-
-
-install_fuff:
-  pkg.installed:
-    - name: ffuf
-  
-install_zap:
-  pkg.installed:
-    - name: zaproxy
-    
-install_hashid_hashcat:
-  pkg.installed:
-    - name: hashid
-    - name: hashcat
-      
-/home/vagrant/wlists:
-  file.directory:
-    - user: vagrant
-    - group: vagrant                                                                                  
-    - makedirs: True
-
-getwlist:
-  - file.managed:
-    - name: /home/vagrant/wlists/rockyou.txt.tar.gz
-    - source: https://github.com/danielmiessler/SecLists/raw/master/Passwords/Leaked-Databases/rockyou.txt.tar.gz  
-##
 
 
 ## Lähteet:
