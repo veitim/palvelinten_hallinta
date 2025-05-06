@@ -1,5 +1,7 @@
 # h5 Miniprojekti - penlab debianilla ja metasploit3:lla
 
+![a](images/h5_18.png)
+
 ## Huom tässä raportissa esiteltyjä työkaluja ei saa käyttää väärin. Eli ulkopuolisiin verkkoihin/laitteisiin ei saa kajota.
 
 Miniprojektina on pentesting labra debianille. Tarkoituksena on vagrantilla tehdä debian kone, jolla voi harjoitella hyökkäämistä maalikoneeseen mihin on asennettu metasploitable3.
@@ -117,7 +119,6 @@ Seuraavaksi aika kirjautua tähän koneeseen sisälle "ctrl + alt + del" Pystyy 
 
 ![a](images/h5_2.png)
 
-
 Sitten kirjaudutaan vagrant tilille (vagrant/vagrant) Kaikkiin prompteihin vastataan ei "Eli ei käynnistetä laittea uudesatan tai yritetä päivittää tätä". Sitten tarkistetaan yhteys hyökkäys koneeseen ja verkkoon.
 
 ![a](images/h5_1.png)
@@ -126,8 +127,29 @@ Ja näin nyt on metasploitable3 valmiina ottamaan hyökkäyksiä vastaan.
 
 Kun NAT yhteys on käytössä hyökkäys koneella (toimii vagrantin kautta), niin voidaan sulkea verkko kokonaan isäntäkoneesta. Tai säädetään palomuuriasetuksia.
 
-Kun halutaan laitteet sammuttaa, niin itse kävin laittamassa "NAT" verkon takaisin päälle, jotta "vagrant" komennot toimisivat "halt, destroy jne."
+Itse olin laiska ja suljin verkon testailujen ajaksi. Mutta komennoilla:
 
+    sudo ufw default deny outgoing
+    sudo ufw allow out on eth1 to 192.168.88.102
+    sudo ufw allow in on eth1 from 192.168.88.102
+
+Pitäisi saada palomuuri blokkaamaan lähtevä liikenne muihin osoitteisiin. Osoite 192.168.88.102 on metasploit koneen osoite josta sallitaan ja mihin sallitaan yhteys.
+
+Porttiskannau nmapilla
+
+![a](images/h5_14.png)
+
+Portteja näyttäisi olevan auki ja katsotaan tarkemmin ssh porttia
+
+![a](images/h5_15.png)
+
+OpenSSH Versio 7.1 Sivuston (https://www.cvedetails.com/version/1295231/Openbsd-Openssh-7.1.html) mukaan löytyy seuraavia haavoittuvaisuuksia.
+
+![a](images/h5_16.png)
+
+Tähän on aika lopettaa!
+
+Kun halutaan laitteet sammuttaa, niin itse kävin laittamassa "NAT" verkon täpän päälle metasploitista, jotta "vagrant" komennot toimisivat "halt, destroy jne."
 
 ## Lähteet:
 
@@ -146,3 +168,7 @@ Hashi Corp: rapid7/metasploitable3-win2k8. Luettavissa: (https://portal.cloud.ha
 Salt Project: How Do I Use Salt States?: Luettavissa: (https://docs.saltproject.io/en/latest/topics/tutorials/starting_states.html) Luettu 6.5.2025
 
 I. Das 2023: Youtube video: Metasploitable 3 Win2k8 Installation Guide with Windows PowerShell, Vagrantfile and Vagrant Cloud: Katsottavissa: (https://www.youtube.com/watch?v=5MaIR-2ND7o) Katsottu 6.5.2025
+
+T. Veijalainen 2025: (Tero Karvisen kurssitoteutus) Tunkeutumistestaus raportit. Luettavissa: (https://github.com/veitim/tunkeutumistestaus) Luettu 6.5.2025
+
+CVEdetail.com: Open bsd Open SSH 7.1. Luettavissa: (https://www.cvedetails.com/version/1295231/Openbsd-Openssh-7.1.html) Luettu 6.5.2025
