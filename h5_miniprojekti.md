@@ -127,7 +127,11 @@ Ja näin nyt on metasploitable3 valmiina ottamaan hyökkäyksiä vastaan.
 
 Kun NAT yhteys on käytössä hyökkäys koneella (toimii vagrantin kautta), niin voidaan sulkea verkko kokonaan isäntäkoneesta. Tai säädetään palomuuriasetuksia.
 
-Itse olin laiska ja suljin verkon testailujen ajaksi. Mutta komennoilla:
+Itse olin laiska ja suljin verkon testailujen ajaksi.
+
+![a](images/h5_16.png) (Päivitetty 6.5.2025 klo.14.48 väärä kuva)
+
+Mutta komennoilla:
 
     sudo ufw default deny outgoing
     sudo ufw allow out on eth1 to 192.168.88.102
@@ -145,7 +149,7 @@ Portteja näyttäisi olevan auki ja katsotaan tarkemmin ssh porttia
 
 OpenSSH Versio 7.1 Sivuston (https://www.cvedetails.com/version/1295231/Openbsd-Openssh-7.1.html) mukaan löytyy seuraavia haavoittuvaisuuksia.
 
-![a](images/h5_16.png)
+![a](images/h5_17.png) (Päivitetty 6.5.2025 klo.14.48 väärä kuva)
 
 Tähän on aika lopettaa!
 
