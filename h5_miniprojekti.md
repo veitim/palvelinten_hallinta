@@ -1,29 +1,20 @@
-# h5 Miniprojekti
+# h5 Miniprojekti - penlab debianilla ja metasploit3:lla
 
-Elikkä miniprojektina on pentesting labra debianille. Tarkoituksena on vagrantilla tehdä debian kone, jolla voi harjoutella hyökkäämistä ja maalikone mihin voi hyökätä.
+## Huom tässä raportissa esiteltyjä työkaluja ei saa käyttää väärin. Eli ulkopuolisiin verkkoihin/laitteisiin ei saa kajota.
+
+Miniprojektina on pentesting labra debianille. Tarkoituksena on vagrantilla tehdä debian kone, jolla voi harjoitella hyökkäämistä maalikoneeseen mihin on asennettu metasploitable3.
+
+## Attax moduulin rakennus ja pieni demo
 
 Aloitin tekemällä moduulin, mikä asentaa hyökkäämiseen soveltuvia ohjelmia. Tein tälle init.sls oman [repon](https://github.com/veitim/miniprojekti/blob/main/init.sls), jonka haen vagranfilellä konetta alustaessa. 
 
-![a](images/h5_1.png)
-
-![a](images/h5_1.png)
-
-![a](images/h5_1.png)
-
-Moduuli "attax" suoritetaan komennolla:
-
-    sudo salt-call --local state.apply attax
-
-Tämä täytyy tehdä kolme kertaa, jotta saavutetaan idempotentti tila.
-
-![a](images/h5_4.png)
-
-
+Kuvassa näkyy moduuli:
 
 ![a](images/h5_5.png)
 
-* ffuf - fuzzaus työkalu (dokumentaatio: https://github.com/ffuf/ffuf)
-* nmap - työkalu porttiskannausta varten (dokumentaatio: https://nmap.org/docs.html)
+* ffuf - fuzzaus työkalu (dokumentaatio: https://github.com/ffuf/ffuf) (HUOM. tällä työkalulla voi aiheuttaa haittaa ulkopuolisille palveluille. Näin ei saa tehdä)
+* nmap - työkalu porttiskannausta varten (dokumentaatio: https://nmap.org/docs.html) (HUOM. työkalua väärin käyttämällä voi joutua oikeuteen. Eli skannaa vain harjoitusalustoja siten, ettei paketit pääse vahingossakaan ulos omasta verkosta)
+   
 * hashid - Kertoo minkä tyyppinen hashi on kyseessä
 * hashcat - salasanan murtamista (dokumentaatio: https://hashcat.net/wiki/doku.php?id=hashcat)
 * bash-completion - john the ripperin vaatimus. "make" komento käyttää tätä
@@ -39,9 +30,18 @@ Tämä täytyy tehdä kolme kertaa, jotta saavutetaan idempotentti tila.
 * wget - john the ripperin vaatimus
 * Loput on sitten john the ripperin asentelua. Alkuun tehdään hakemisto john the ripperille. Tämän jälkeen asennetaan tämä hakemalla se tekijän github reposta. (johnin dokumentaatio: https://github.com/openwall/john)
 
+Moduuli "attax" suoritetaan komennolla:
+
+    sudo salt-call --local state.apply attax
+
+Tämä täytyy tehdä kolme kertaa, jotta saavutetaan idempotentti tila.
+
+![a](images/h5_4.png)
+
+
 Pieni demo johh the ripperistä:
 
-Navigoidaan seuraavaan hakemistoon ja suoritetaan ./configure
+Navigoidaan seuraavaan hakemistoon ja ajetaan komento "./configure"
 
 ![a](images/h5_7.png)
 
@@ -63,6 +63,70 @@ Seuraavaksi tehdään tiedosto, joka zipataan ja salasanalla suojataan.
 
 ![a](images/h5_6.png)
 
+Kokeillaan unzipata tämä
+
+![a](images/h5_12.png)
+
+Ei onnistu, eikun murtamaan.
+
+![a](images/h5_11.png)
+
+Eli john the ripprein sisällä on "run" kansio, jonka sisältä voi "./työkalu" komennolla työkaluja ajaa. Käytän kuvassa zip2john työkalua, jolla saan hashin zipistä. Ja sitten "john" työkalulla puran tämän hashin ja vastauksena näkyykin zipille annettu salasana, jolla tämän voi purkaa.
+
+John the ripper esitelty.
+
+Seuraavaksi ajoin moduulin init.sls tiedoston githubiin, josta pystyn tämän tulevaisuudessa hakemaan.
+
+## Vagrantfile
+
+Seuraavaksi vagrantfilen vuoro (löytyy täältä: https://github.com/veitim/miniprojekti/blob/main/vagrantfile). Ja se näyttää seuraavalta: 
+
+![a](images/h5_13.png)
+
+* haetaan päivitykset
+* asennetaan curli
+* haetaan salttia varten paketteja
+* päivitetään paketit (saltti vaati tätä)
+* asennetaan tulimuuri
+* avataan portteja (22/tcp tärkeä, koska vagrantilla ollaan yhteydessä ssh:n kautta)
+* portit 4505 ja 4506 tärkeitä, jos on orjia. Saltti taitaa toimia näiden kautta (eli minun projektissa näitä ei tarvitsisi pitää auki)
+* asennetaan salt-master
+* tehdään moduuli hakemisto
+* haetaan reposta init.sls
+* käynnistetään saltti
+* potkaistaan salttia
+* laitetaan tulimuuri päälle
+
+  Siinä alkuasetukset. Sitten onkin debian koneen ja metasploitable3 koneen alustus. Koneille annetaan 2gb työmuistia (ettei vahingossa kaatuisi)
+
+  komentotulkista komennolla:
+
+      vagrant up
+
+  Käynnistetaan/asennetaan koneet.
+
+## Metasploitable3
+
+Metasploitable on tarkoituksella tehty haavoittuvaiseksi koneeksi. Joten tätä konetta ei kannata missään tapauksessa päästää julkiseen verkkoon. Mieluiten tätä käytetään siten, että ainoastaan hyökkääjä koneella on tähän yhteys. Ongelmana tässä on se, että tein tämän vagrantilla ja vagrant käyttää "NAT" yhteyttä. Ja tätä yhteyttä käyttämällä pääsee julkiseen verkkoon, niin en keskinyt parempaa keinoa sulkea tätä, kuin manuaalisesti.
+
+Nappasin "NAT" verkon pois käytöstä network asetuksista (adapter1).
+
+![a](images/h5_3.png)
+
+Seuraavaksi aika kirjautua tähän koneeseen sisälle "ctrl + alt + del" Pystyy yläpalkin "insert" valikosta tämän tekemään.
+
+![a](images/h5_2.png)
+
+
+Sitten kirjaudutaan vagrant tilille (vagrant/vagrant) Kaikkiin prompteihin vastataan ei "Eli ei käynnistetä laittea uudesatan tai yritetä päivittää tätä". Sitten tarkistetaan yhteys hyökkäys koneeseen ja verkkoon.
+
+![a](images/h5_1.png)
+
+Ja näin nyt on metasploitable3 valmiina ottamaan hyökkäyksiä vastaan.
+
+Kun NAT yhteys on käytössä hyökkäys koneella (toimii vagrantin kautta), niin voidaan sulkea verkko kokonaan isäntäkoneesta. Tai säädetään palomuuriasetuksia.
+
+Kun halutaan laitteet sammuttaa, niin itse kävin laittamassa "NAT" verkon takaisin päälle, jotta "vagrant" komennot toimisivat "halt, destroy jne."
 
 
 ## Lähteet:
