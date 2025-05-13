@@ -1,4 +1,4 @@
-# h5 Miniprojekti - penlab debianilla ja metasploit3:lla
+# h5 Miniprojekti - penlab debianilla ja metasploitable3:lla
 
 ![a](images/h5_18.png)
 
@@ -154,6 +154,8 @@ OpenSSH Versio 7.1 Sivuston (https://www.cvedetails.com/version/1295231/Openbsd-
 Tähän on aika lopettaa!
 
 Kun halutaan laitteet sammuttaa, niin itse kävin laittamassa "NAT" verkon täpän päälle metasploitista, jotta "vagrant" komennot toimisivat "halt, destroy jne."
+
+Päivitetty 13.5.2025: korjattu kirjoitusvirhe
 
 ## Lähteet:
 
